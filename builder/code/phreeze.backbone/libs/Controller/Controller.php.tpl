@@ -174,7 +174,7 @@ class {$singular}Controller extends AppBaseController
 
 			if (count($errors) > 0)
 			{
-				$this->RenderErrorJSON('Please check the form for errors',$errors);
+				$this->RenderErrorJSON('Por Favor, verifique os erros',$errors);
 			}
 			else
 			{
@@ -240,7 +240,7 @@ class {$singular}Controller extends AppBaseController
 
 			if (count($errors) > 0)
 			{
-				$this->RenderErrorJSON('Please check the form for errors',$errors);
+				$this->RenderErrorJSON('Por Favor, verifique os erros',$errors);
 			}
 			else
 			{

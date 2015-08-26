@@ -427,20 +427,20 @@ abstract class Phreezable implements Serializable
 						case FM_TYPE_MEDIUMINT:
 						case FM_TYPE_BIGINT:
 						case FM_TYPE_DECIMAL:
-							if ($fm->IsRequired && !is_numeric($this->$prop))
+							if (($fm->IsRequired || $this->$prop != "") && !is_numeric($this->$prop))
 							{
 								$this->AddValidationError($prop,"$prop n&atilde;o &eacute; um n&uacute;mero v&aacute;lido. ");
 							}
 							break;
 						case FM_TYPE_DATE:
 						case FM_TYPE_DATETIME:
-							if ($fm->IsRequired && strtotime($this->$prop) === '')
+							if (($fm->IsRequired || $this->$prop != "") && strtotime($this->$prop) === '')
 							{
 								$this->AddValidationError($prop,"$prop n&atilde;o &eacute; uma data v&aacute;lida.");
 							}
 							break;
 						case FM_TYPE_ENUM:
-							if ($fm->IsRequired && !in_array($this->$prop, $fm->GetEnumValues()) )
+							if (($fm->IsRequired || $this->$prop != "") && !in_array($this->$prop, $fm->GetEnumValues()) )
 							{
 								$this->AddValidationError($prop,"$prop n&atilde;o &eacute; um valor permitido. Valores permitidos: " . implode(', ',$fm->GetEnumValues()) );
 							}
