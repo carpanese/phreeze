@@ -310,7 +310,7 @@ var page = {
 			wait: true,
 			success: function(){
 				$('#{$singular|lcfirst}DetailDialog').modal('hide');
-				setTimeout("app.appendAlert('{$singular} was sucessfully " + (isNew ? "inserted" : "updated") + "','alert-success',3000,'collectionAlert')",500);
+				setTimeout("app.appendAlert('{$singular} inserido com sucesso " + (isNew ? "inserted" : "updated") + "','alert-success',3000,'collectionAlert')",500);
 				app.hideProgress('modelLoader');
 
 				// if the collection was initally new then we need to add it to the collection now
@@ -357,7 +357,7 @@ var page = {
 			wait: true,
 			success: function(){
 				$('#{$singular|lcfirst}DetailDialog').modal('hide');
-				setTimeout("app.appendAlert('The {$singular} record was deleted','alert-success',3000,'collectionAlert')",500);
+				setTimeout("app.appendAlert('O {$singular} registro foi deletado','alert-success',3000,'collectionAlert')",500);
 				app.hideProgress('modelLoader');
 
 				if (model.reloadCollectionOnModelUpdate) {

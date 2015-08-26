@@ -384,6 +384,12 @@ abstract class Phreezable implements Serializable
 			foreach ($fms as $fm)
 			{
 				$prop = $fm->PropertyName;
+				
+				//Implementacao manual para validacao de campos requeridos Carpanese
+				
+				if($fm->IsRequired && $this->$prop == ""){
+					$this->AddValidationError($prop,"$prop &eacute; obrigat&oacute;rio (a)");
+				}
 
 				if ($fm->FieldType == FM_TYPE_DECIMAL && is_numeric($fm->FieldSize)) {
 					// decimal validation needs to be treated differently than whole numbers
@@ -397,13 +403,13 @@ abstract class Phreezable implements Serializable
 					$limitLeft = (int)$limits[0] - $limitRight;
 					
 					if ($left > $limitLeft || $right > $limitRight) {
-						$this->AddValidationError($prop,"$prop exceeds the maximum length of " . $fm->FieldSize . "");
+						$this->AddValidationError($prop,"$prop excede o tamanho m&aacute;ximo de " . $fm->FieldSize . "");
 					}
 					
 				}
 				elseif (is_numeric($fm->FieldSize) && ($lenfunction($this->$prop) > $fm->FieldSize))
 				{
-					$this->AddValidationError($prop,"$prop exceeds the maximum length of " . $fm->FieldSize . "");
+					$this->AddValidationError($prop,"$prop excede o tamanho m&aacute;ximo de " . $fm->FieldSize . "");
 				}
 
 				if ($this->$prop == "" && ($fm->DefaultValue || $fm->IsAutoInsert) )
@@ -421,22 +427,22 @@ abstract class Phreezable implements Serializable
 						case FM_TYPE_MEDIUMINT:
 						case FM_TYPE_BIGINT:
 						case FM_TYPE_DECIMAL:
-							if (!is_numeric($this->$prop))
+							if ($fm->IsRequired && !is_numeric($this->$prop))
 							{
-								$this->AddValidationError($prop,"$prop is not a valid number");
+								$this->AddValidationError($prop,"$prop n&atilde;o &eacute; um n&uacute;mero v&aacute;lido. ");
 							}
 							break;
 						case FM_TYPE_DATE:
 						case FM_TYPE_DATETIME:
-							if (strtotime($this->$prop) === '')
+							if ($fm->IsRequired && strtotime($this->$prop) === '')
 							{
-								$this->AddValidationError($prop,"$prop is not a valid date/time value.");
+								$this->AddValidationError($prop,"$prop n&atilde;o &eacute; uma data v&aacute;lida.");
 							}
 							break;
 						case FM_TYPE_ENUM:
-							if ( !in_array($this->$prop, $fm->GetEnumValues()) )
+							if ($fm->IsRequired && !in_array($this->$prop, $fm->GetEnumValues()) )
 							{
-								$this->AddValidationError($prop,"$prop is not valid value. Allowed values: " . implode(', ',$fm->GetEnumValues()) );
+								$this->AddValidationError($prop,"$prop n&atilde;o &eacute; um valor permitido. Valores permitidos: " . implode(', ',$fm->GetEnumValues()) );
 							}
 							break;
 						default:

@@ -49,6 +49,7 @@ class FieldMap
 	public $IsPrimaryKey;
 	public $DefaultValue;
 	public $IsAutoInsert;
+	public $IsRequired;
 
 	/** @variant either an int or an array to indicate max size or acceptable values */
 	public $FieldSize;
@@ -75,7 +76,7 @@ class FieldMap
 	* @param variant $dv Default value  (optional default = null)
 	* @param bool $iai True if column is auto insert column  (optional default = null)
 	*/
-	public function __construct($pn, $tn, $cn, $pk = false, $ft = FM_TYPE_UNKNOWN, $fs = 0, $dv = null, $iai = null)
+	public function __construct($pn, $tn, $cn, $pk = false, $ft = FM_TYPE_UNKNOWN, $fs = 0, $dv = null, $iai = null, $rq)
 	{
 		$this->PropertyName = $pn;
 		$this->TableName = $tn;
@@ -85,6 +86,7 @@ class FieldMap
 		$this->FieldSize = $fs;
 		$this->DefaultValue = $dv;
 		$this->IsAutoInsert = $iai;
+		$this->IsRequired = $rq;
 	}
 	
 	/**
