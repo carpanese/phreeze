@@ -53,7 +53,7 @@ set_include_path(
  * Any classes that will be stored in the session can be added here
  * and will be pre-loaded on every page
  */
-require_once "App/ExampleUser.php";
+require_once "Model/User.php";
 
 /**
  * RENDER ENGINE
@@ -77,11 +77,30 @@ GlobalConfig::$ROUTE_MAP = array(
 	'GET:' => array('route' => 'Default.Home'),
 		
 	// example authentication routes
-	'GET:loginform' => array('route' => 'SecureExample.LoginForm'),
-	'POST:login' => array('route' => 'SecureExample.Login'),
-	'GET:secureuser' => array('route' => 'SecureExample.UserPage'),
-	'GET:secureadmin' => array('route' => 'SecureExample.AdminPage'),
-	'GET:logout' => array('route' => 'SecureExample.Logout'),
+	'GET:loginform' => array('route' => 'Secure.LoginForm'),
+	'POST:login' => array('route' => 'Secure.Login'),
+	'GET:secureuser' => array('route' => 'Secure.UserPage'),
+	'GET:secureadmin' => array('route' => 'Secure.AdminPage'),
+	'GET:logout' => array('route' => 'Secure.Logout'),
+	
+	// Funcoes Autenticacao
+	'GET:roles' => array('route' => 'Role.ListView'),
+	'GET:role/(:num)' => array('route' => 'Role.SingleView', 'params' => array('id' => 1)),
+	'GET:api/roles' => array('route' => 'Role.Query'),
+	'POST:api/role' => array('route' => 'Role.Create'),
+	'GET:api/role/(:num)' => array('route' => 'Role.Read', 'params' => array('id' => 2)),
+	'PUT:api/role/(:num)' => array('route' => 'Role.Update', 'params' => array('id' => 2)),
+	'DELETE:api/role/(:num)' => array('route' => 'Role.Delete', 'params' => array('id' => 2)),
+		
+	// Usuarios Autenticacao
+	'GET:users' => array('route' => 'User.ListView'),
+	'GET:user/(:num)' => array('route' => 'User.SingleView', 'params' => array('id' => 1)),
+	'GET:api/users' => array('route' => 'User.Query'),
+	'POST:api/user' => array('route' => 'User.Create'),
+	'GET:api/user/(:num)' => array('route' => 'User.Read', 'params' => array('id' => 2)),
+	'PUT:api/user/(:num)' => array('route' => 'User.Update', 'params' => array('id' => 2)),
+	'DELETE:api/user/(:num)' => array('route' => 'User.Delete', 'params' => array('id' => 2)),
+		
 {foreach from=$tables item=table name=tablesForEach}{if isset($tableInfos[$table->Name])}
 	{assign var=singular value=$tableInfos[$table->Name]['singular']}
 	{assign var=plural value=$tableInfos[$table->Name]['plural']}

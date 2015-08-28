@@ -173,7 +173,7 @@ class GeneratorController extends BaseController
 				// add all tables to a tableInfos array that can be used for cross-referencing by table name
 						foreach ($dbSchema->Tables as $table)
 				{
-					if ($table->GetPrimaryKeyName())
+					if ($table->GetPrimaryKeyName() && $table->Name != "role" && $table->Name != "user")
 					{
 						$tableName = $table->Name;
 						$tableInfos[$tableName] = Array();
@@ -236,7 +236,7 @@ class GeneratorController extends BaseController
 					// add all tables to a tableInfos array that can be used for cross-referencing by table name
 					foreach ($dbSchema->Tables as $table)
 					{
-						if ($table->GetPrimaryKeyName())
+						if ($table->GetPrimaryKeyName() && $table->Name != "role" && $table->Name != "user")
 						{
 							$tableName = $table->Name;
 							$tableInfos[$tableName] = Array();

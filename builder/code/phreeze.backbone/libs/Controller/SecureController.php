@@ -3,7 +3,7 @@
 
 /** import supporting libraries */
 require_once("AppBaseController.php");
-require_once("App/ExampleUser.php");
+require_once("Model/User.php");
 
 /**
  * SecureExampleController is a sample controller to demonstrate
@@ -13,7 +13,7 @@ require_once("App/ExampleUser.php");
  * @author ClassBuilder
  * @version 1.0
  */
-class SecureExampleController extends AppBaseController
+class SecureController extends AppBaseController
 {
 
 	/**
@@ -31,15 +31,15 @@ class SecureExampleController extends AppBaseController
 	 */
 	public function UserPage()
 	{
-		$this->RequirePermission(ExampleUser::$PERMISSION_USER, 
-				'SecureExample.LoginForm', 
-				'Login is required to access the secure user page',
-				'You do not have permission to access the secure user page');
+		$this->RequirePermission(User::$PERMISSION_READ, 
+				'Secure.LoginForm', 
+				'Login e requerido para acessar essa pagina',
+				'Permissao de leitura e obrigatoria');
 		
 		$this->Assign("currentUser", $this->GetCurrentUser());
 		
 		$this->Assign('page','userpage');
-		$this->Render("SecureExample");
+		$this->Render("Secure");
 	}
 	
 	/**
@@ -47,15 +47,15 @@ class SecureExampleController extends AppBaseController
 	 */
 	public function AdminPage()
 	{
-		$this->RequirePermission(ExampleUser::$PERMISSION_ADMIN, 
-				'SecureExample.LoginForm', 
-				'Login is required to access the admin page',
-				'Admin permission is required to access the admin page');
+		$this->RequirePermission(User::$PERMISSION_ADMIN, 
+				'Secure.LoginForm', 
+				'Login e requerido para acessar a pagina de admin',
+				'Permissao de admin e requerida');
 		
 		$this->Assign("currentUser", $this->GetCurrentUser());
 		
 		$this->Assign('page','adminpage');
-		$this->Render("SecureExample");
+		$this->Render("Secure");
 	}
 	
 	/**
@@ -66,7 +66,7 @@ class SecureExampleController extends AppBaseController
 		$this->Assign("currentUser", $this->GetCurrentUser());
 		
 		$this->Assign('page','login');
-		$this->Render("SecureExample");
+		$this->Render("Secure");
 	}
 	
 	/**
@@ -75,18 +75,18 @@ class SecureExampleController extends AppBaseController
 	 */
 	public function Login()
 	{
-		$user = new ExampleUser();
+		$user = new User($this->Phreezer);
 		
 		if ($user->Login(RequestUtil::Get('username'), RequestUtil::Get('password')))
 		{
 			// login success
 			$this->SetCurrentUser($user);
-			$this->Redirect('SecureExample.UserPage');
+			$this->Redirect('Secure.UserPage');
 		}
 		else
 		{
 			// login failed
-			$this->Redirect('SecureExample.LoginForm','Unknown username/password combination');
+			$this->Redirect('Secure.LoginForm','Usuario e senha invalidos.');
 		}
 	}
 	
@@ -96,7 +96,7 @@ class SecureExampleController extends AppBaseController
 	public function Logout()
 	{
 		$this->ClearCurrentUser();
-		$this->Redirect("SecureExample.LoginForm","You are now logged out");
+		$this->Redirect("Secure.LoginForm","You are now logged out");
 	}
 
 }

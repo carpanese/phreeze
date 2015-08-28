@@ -37,7 +37,7 @@
 
 		<script type="text/javascript" src="scripts/libs/LAB.min.js"></script>
 		<script type="text/javascript">
-			$LAB.script("//code.jquery.com/jquery-1.8.2.min.js").wait()
+			$LAB.script("scripts/libs/jquery-1.8.2.min.js").wait()
 				.script("bootstrap/js/bootstrap.min.js")
 				.script("bootstrap/js/bootstrap-datepicker.js")
 				.script("bootstrap/js/bootstrap-timepicker.js")

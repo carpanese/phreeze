@@ -25,11 +25,14 @@ class {$singular}Controller extends AppBaseController
 	protected function Init()
 	{
 		parent::Init();
-
-		// TODO: add controller-wide bootstrap code
 		
-		// TODO: if authentiation is required for this entire controller, for example:
-		// $this->RequirePermission(ExampleUser::$PERMISSION_USER,'SecureExample.LoginForm');
+		/**
+		 * Informe o tipo de permissao
+		 */
+		$this->RequirePermission(User::$PERMISSION_READ, 
+			'Secure.LoginForm', 
+			'Login erequerido para acessar esta pagina',
+			'Permissao de leitura e obrigatoria');
 	}
 
 	/**

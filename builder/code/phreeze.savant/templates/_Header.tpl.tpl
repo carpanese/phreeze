@@ -34,7 +34,7 @@
 
 		<script type="text/javascript" src="scripts/libs/LAB.min.js"></script>
 		<script type="text/javascript">
-			$LAB.script("//code.jquery.com/jquery-1.8.2.min.js").wait()
+			$LAB.script("scripts/libs/jquery-1.8.2.min.js").wait()
 				.script("bootstrap/js/bootstrap.min.js")
 				.script("bootstrap/js/bootstrap-datepicker.js")
 				.script("bootstrap/js/bootstrap-timepicker.js")
@@ -62,6 +62,15 @@
 						<a class="brand" href="./">{$appname}</a>
 						<div class="nav-collapse collapse">
 							<ul class="nav">
+								<?php if (isset($this->currentUser)) { ?>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Admin Usu&aacute;rios <i class="caret"></i></a>
+									<ul class="dropdown-menu">
+										<li <?php if ($this->nav=='users') { echo 'class="active"'; } ?>><a href="./users">Usu&aacute;rios</a></li>
+										<li <?php if ($this->nav=='roles') { echo 'class="active"'; } ?>><a href="./roles">Fun&ccedil;&otilde;es</a></li>
+									</ul>
+								</li>
+								<?php } ?>
 {foreach from=$selectedTables item=table name=ddForEach}{if isset($tableInfos[$table->Name])}
 {if $smarty.foreach.ddForEach.index == $max_items_in_topnav && !$smarty.foreach.ddForEach.last}
 							</ul>
@@ -79,12 +88,17 @@
 							</ul>
 							<ul class="nav pull-right">
 								<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lock"></i> Login <i class="caret"></i></a>
+								<?php if (isset($this->currentUser)) { ?>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Bem Vindo <?php $this->eprint($this->currentUser->Username); ?> <i class="caret"></i></a>
+								<?php } else { ?>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lock"></i> Login <i class="caret"></i></a>
+								<?php } ?>	
 								<ul class="dropdown-menu">
-									<li><a href="./loginform">Login</a></li>
-									<li class="divider"></li>
-									<li><a href="./secureuser">Example User Page <i class="icon-lock"></i></a></li>
-									<li><a href="./secureadmin">Example Admin Page <i class="icon-lock"></i></a></li>
+									<?php if (isset($this->currentUser)) { ?>
+										<li><a href="./logout">Logout</a></li>
+									<?php } else { ?>
+										<li><a href="./loginform">Login</a></li>
+									<?php } ?>	
 								</ul>
 								</li>
 							</ul>
