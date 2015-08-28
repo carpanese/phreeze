@@ -1,42 +1,38 @@
-<?php
-	$this->assign('title','Autenticacao Padrao | Usuarios');
-	$this->assign('nav','users');
+{extends file="Master.tpl"}
 
-	$this->display('_Header.tpl.php');
-?>
+{block name=title}Riopokerclube | Usuarios{/block}
 
+{block name=customHeader}
 <script type="text/javascript">
-	$LAB.script("bootstrap/js/bootstrap-datepicker.js")
-	.script("bootstrap/js/bootstrap-timepicker.js")
-	.script("bootstrap/js/bootstrap-combobox.js")
-	.script("scripts/libs/underscore-min.js").wait()
-	.script("scripts/libs/underscore.date.min.js")
-	.script("scripts/libs/backbone-min.js")
-	.script("scripts/app.js")
-	.script("scripts/model.js").wait()
-	.script("scripts/view.js").wait()
-	.script("scripts/app/users.js").wait(function(){
+	$LAB.script("scripts/app/users.js").wait(function(){
 		$(document).ready(function(){
 			page.init();
 		});
-		
+
 		// hack for IE9 which may respond inconsistently with document.ready
 		setTimeout(function(){
 			if (!page.isInitialized) page.init();
 		},1000);
 	});
 </script>
+{/block}
 
-<div class="container">
+{block name=banner}
+	<h1>
+		<i class="icon-th-list"></i> Usu&aacute;rios
+		<span id=loader class="loader progress progress-striped active"><span class="bar"></span></span>
+		<span class='input-append pull-right searchContainer'>
+			<input id='filter' type="text" placeholder="Buscar..." />
+			<button class='btn add-on'><i class="icon-search"></i></button>
+		</span>
+	</h1>
+{/block}
 
-<h1>
-	<i class="icon-th-list"></i> Usu&aacute;rios
-	<span id=loader class="loader progress progress-striped active"><span class="bar"></span></span>
-	<span class='input-append pull-right searchContainer'>
-		<input id='filter' type="text" placeholder="Buscar..." />
-		<button class='btn add-on'><i class="icon-search"></i></button>
-	</span>
-</h1>
+{block name=navbar prepend}
+	{assign var="nav" value="users"}
+{/block}
+
+{block name=content}
 
 	<!-- underscore template for the collection -->
 	<script type="text/template" id="userCollectionTemplate">
@@ -160,8 +156,4 @@
 		<button id="newUserButton" class="btn btn-primary">Adicionar Usu&aacute;rio</button>
 	</p>
 
-</div> <!-- /container -->
-
-<?php
-	$this->display('_Footer.tpl.php');
-?>
+{/block}

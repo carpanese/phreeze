@@ -1,42 +1,38 @@
-<?php
-	$this->assign('title','Autenticacao Padrao | Funcoes');
-	$this->assign('nav','roles');
+{extends file="Master.tpl"}
 
-	$this->display('_Header.tpl.php');
-?>
+{block name=title}Riopokerclube | Funcoes{/block}
 
+{block name=customHeader}
 <script type="text/javascript">
-	$LAB.script("bootstrap/js/bootstrap-datepicker.js")
-	.script("bootstrap/js/bootstrap-timepicker.js")
-	.script("bootstrap/js/bootstrap-combobox.js")
-	.script("scripts/libs/underscore-min.js").wait()
-	.script("scripts/libs/underscore.date.min.js")
-	.script("scripts/libs/backbone-min.js")
-	.script("scripts/app.js")
-	.script("scripts/model.js").wait()
-	.script("scripts/view.js").wait()
-	.script("scripts/app/roles.js").wait(function(){
+	$LAB.script("scripts/app/roles.js").wait(function(){
 		$(document).ready(function(){
 			page.init();
 		});
-		
+
 		// hack for IE9 which may respond inconsistently with document.ready
 		setTimeout(function(){
 			if (!page.isInitialized) page.init();
 		},1000);
 	});
 </script>
+{/block}
 
-<div class="container">
+{block name=banner}
+	<h1>
+		<i class="icon-th-list"></i> Fun&ccedil;&otilde;es
+		<span id=loader class="loader progress progress-striped active"><span class="bar"></span></span>
+		<span class='input-append pull-right searchContainer'>
+			<input id='filter' type="text" placeholder="Buscar..." />
+			<button class='btn add-on'><i class="icon-search"></i></button>
+		</span>
+	</h1>
+{/block}
 
-<h1>
-	<i class="icon-th-list"></i> Fun&ccedil;&otilde;es
-	<span id=loader class="loader progress progress-striped active"><span class="bar"></span></span>
-	<span class='input-append pull-right searchContainer'>
-		<input id='filter' type="text" placeholder="Buscar..." />
-		<button class='btn add-on'><i class="icon-search"></i></button>
-	</span>
-</h1>
+{block name=navbar prepend}
+	{assign var="nav" value="roles"}
+{/block}
+
+{block name=content}
 
 	<!-- underscore template for the collection -->
 	<script type="text/template" id="roleCollectionTemplate">
@@ -47,7 +43,7 @@
 				<th id="header_Name">Nome<% if (page.orderBy == 'Name') { %> <i class='icon-arrow-<%= page.orderDesc ? 'up' : 'down' %>' /><% } %></th>
 				<th id="header_CanAdmin">Admin<% if (page.orderBy == 'CanAdmin') { %> <i class='icon-arrow-<%= page.orderDesc ? 'up' : 'down' %>' /><% } %></th>
 				<th id="header_CanEdit">Edi&ccedil;&atilde;o<% if (page.orderBy == 'CanEdit') { %> <i class='icon-arrow-<%= page.orderDesc ? 'up' : 'down' %>' /><% } %></th>
-				<th id="header_CanWrite"Grava&ccedil;&atilde;o<% if (page.orderBy == 'CanWrite') { %> <i class='icon-arrow-<%= page.orderDesc ? 'up' : 'down' %>' /><% } %></th>
+				<th id="header_CanWrite">Grava&ccedil;&atilde;o<% if (page.orderBy == 'CanWrite') { %> <i class='icon-arrow-<%= page.orderDesc ? 'up' : 'down' %>' /><% } %></th>
 				<th id="header_CanRead">Leitura<% if (page.orderBy == 'CanRead') { %> <i class='icon-arrow-<%= page.orderDesc ? 'up' : 'down' %>' /><% } %></th>
 			</tr>
 		</thead>
@@ -161,9 +157,5 @@
 	<p id="newButtonContainer" class="buttonContainer">
 		<button id="newRoleButton" class="btn btn-primary">Adicionar Fun&ccedil;&otilde;es</button>
 	</p>
-
-</div> <!-- /container -->
-
-<?php
-	$this->display('_Footer.tpl.php');
-?>
+	
+{/block}

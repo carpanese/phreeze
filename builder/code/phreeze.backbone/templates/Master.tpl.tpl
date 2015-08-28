@@ -73,6 +73,15 @@
 						<a class="brand" href="./">{$appname}</a>
 						<div class="nav-collapse collapse">
 							<ul class="nav">
+							{ldelim}if isset($currentUser) {rdelim}
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Admin Usu&aacute;rios <i class="caret"></i></a>
+									<ul class="dropdown-menu">
+										<li {ldelim}if $nav=='users'{rdelim} class="active"{ldelim}/if{rdelim}><a href="./users">Usu&aacute;rios</a></li>
+										<li {ldelim}if $nav=='roles'{rdelim} class="active"{ldelim}/if{rdelim}><a href="./roles">Fun&ccedil;&otilde;es</a></li>
+									</ul>
+								</li>
+							{ldelim}/if{rdelim}
 {foreach from=$selectedTables item=table name=ddForEach}{if isset($tableInfos[$table->Name])}
 {if $smarty.foreach.ddForEach.index == $max_items_in_topnav && !$smarty.foreach.ddForEach.last}
 							</ul>
@@ -91,11 +100,19 @@
 
 							<ul class="nav pull-right">
 								<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lock"></i> Login <i class="caret"></i></a>
+								{ldelim}if isset($currentUser) {rdelim}
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Bem Vindo <i class="caret"></i></a>
+								{ldelim}/if{rdelim}
+								{ldelim}if !isset($currentUser) {rdelim}
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lock"></i> Login <i class="caret"></i></a>
+								{ldelim}/if{rdelim}
 								<ul class="dropdown-menu">
-									<li><a href="./loginform">Login</a></li>
-									<li><a href="./secureuser">Example User Page <i class="icon-lock"></i></a></li>
-									<li><a href="./secureadmin">Example Admin Page <i class="icon-lock"></i></a></li>
+									{ldelim}if isset($currentUser) {rdelim}
+										<li><a href="./logout">Logout</a></li>
+									{ldelim}/if{rdelim}
+									{ldelim}if !isset($currentUser){rdelim}	
+										<li><a href="./loginform">Login</a></li>
+									{ldelim}/if{rdelim}	
 								</ul>
 								</li>
 							</ul>

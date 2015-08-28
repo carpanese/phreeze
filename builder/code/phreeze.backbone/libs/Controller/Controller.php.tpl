@@ -31,7 +31,7 @@ class {$singular}Controller extends AppBaseController
 		 */
 		$this->RequirePermission(User::$PERMISSION_READ, 
 			'Secure.LoginForm', 
-			'Login erequerido para acessar esta pagina',
+			'Login requerido para acessar esta pagina',
 			'Permissao de leitura e obrigatoria');
 	}
 
