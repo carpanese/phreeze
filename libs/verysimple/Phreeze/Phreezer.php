@@ -41,7 +41,7 @@ class Phreezer extends Observable
 	 */
 	public $RenderEngine;
 
-	public static $Version = '3.3.8 HEAD';
+	public static $Version = '3.3.9 CARPANESE';
 	
 	/** @var bool set to true to enable compatibility with phreeze 2.0 apps */
 	public static $COMPAT_VERSION_2 = FALSE;

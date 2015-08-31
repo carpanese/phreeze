@@ -21,162 +21,6 @@ model.longPollDuration = {if $enableLongPolling != '0'}5000{else}0{/if};
  */
 model.reloadCollectionOnModelUpdate = true;
 
-/**
- * Backbone Padrao Funcao Autenticacao
- */
-model.RoleModel = Backbone.Model.extend({
-	urlRoot: 'api/role',
-	idAttribute: 'id',
-	id: '',
-	name: '',
-	canAdmin: '',
-	canEdit: '',
-	canWrite: '',
-	canRead: '',
-	defaults: {
-		'id': null,
-		'name': '',
-		'canAdmin': '',
-		'canEdit': '',
-		'canWrite': '',
-		'canRead': ''
-	}
-});
-
-/**
- * Lista Backbone Funcao Autenticacao Padrao
- */
-model.RoleCollection = Backbone.Collection.extend({
-	url: 'api/roles',
-	model: model.RoleModel,
-
-	totalResults: 0,
-	totalPages: 0,
-	currentPage: 0,
-	pageSize: 0,
-	orderBy: '',
-	orderDesc: false,
-	lastResponseText: null,
-	collectionHasChanged: true,
-
-	/**
-	 * override parse to track changes and handle pagination
-	 * if the server call has returned page data
-	 */
-	parse: function(response, xhr) {
-
-		// check the raw response to determine if collection actually changed
-		// note xhr param was removed from backbone 0.99
-		var responseText = xhr ? xhr.responseText : JSON.stringify(response);
-		this.collectionHasChanged = (this.lastResponseText != responseText);
-		this.lastResponseText = responseText;
-
-		var rows;
-
-		if (response.currentPage)
-		{
-			rows = response.rows;
-			this.totalResults = response.totalResults;
-			this.totalPages = response.totalPages;
-			this.currentPage = response.currentPage;
-			this.pageSize = response.pageSize;
-			this.orderBy = response.orderBy;
-			this.orderDesc = response.orderDesc;
-		}
-		else
-		{
-			rows = response;
-			this.totalResults = rows.length;
-			this.totalPages = 1;
-			this.currentPage = 1;
-			this.pageSize = this.totalResults;
-			this.orderBy = response.orderBy;
-			this.orderDesc = response.orderDesc;
-		}
-
-		return rows;
-	}
-});
-
-/**
- * Backbone Modelo Usuario
- */
-model.UserModel = Backbone.Model.extend({
-	urlRoot: 'api/user',
-	idAttribute: 'id',
-	id: '',
-	roleId: '',
-	roleName: '',
-	username: '',
-	password: '',
-	firstName: '',
-	lastName: '',
-	defaults: {
-		'id': null,
-		'roleId': '',
-		'roleName': 'Anonymous',
-		'username': '',
-		'password': '',
-		'firstName': '',
-		'lastName': ''
-	}
-});
-
-/**
- * Backbone Lista Usuario
- */
-model.UserCollection = Backbone.Collection.extend({
-	url: 'api/users',
-	model: model.UserModel,
-
-	totalResults: 0,
-	totalPages: 0,
-	currentPage: 0,
-	pageSize: 0,
-	orderBy: '',
-	orderDesc: false,
-	lastResponseText: null,
-	collectionHasChanged: true,
-
-	/**
-	 * override parse to track changes and handle pagination
-	 * if the server call has returned page data
-	 */
-	parse: function(response, xhr) {
-
-		// check the raw response to determine if collection actually changed
-		// note xhr param was removed from backbone 0.99
-		var responseText = xhr ? xhr.responseText : JSON.stringify(response);
-		this.collectionHasChanged = (this.lastResponseText != responseText);
-		this.lastResponseText = responseText;
-
-		var rows;
-
-		if (response.currentPage)
-		{
-			rows = response.rows;
-			this.totalResults = response.totalResults;
-			this.totalPages = response.totalPages;
-			this.currentPage = response.currentPage;
-			this.pageSize = response.pageSize;
-			this.orderBy = response.orderBy;
-			this.orderDesc = response.orderDesc;
-		}
-		else
-		{
-			rows = response;
-			this.totalResults = rows.length;
-			this.totalPages = 1;
-			this.currentPage = 1;
-			this.pageSize = this.totalResults;
-			this.orderBy = response.orderBy;
-			this.orderDesc = response.orderDesc;
-		}
-
-		return rows;
-	}
-});
-
 
 /**
  * a default sort method for sorting collection items.  this will sort the collection
@@ -286,6 +130,67 @@ model.AbstractCollection = Backbone.Collection.extend({
 
 		return rows;
 	}
+});
+
+/**
+ * Role Backbone Model
+ */
+model.RoleModel = Backbone.Model.extend({
+	urlRoot: 'api/role',
+	idAttribute: 'id',
+	id: '',
+	name: '',
+	canAdmin: '',
+	canEdit: '',
+	canWrite: '',
+	canRead: '',
+	defaults: {
+		'id': null,
+		'name': '',
+		'canAdmin': '',
+		'canEdit': '',
+		'canWrite': '',
+		'canRead': ''
+	}
+});
+
+/**
+ * Role Backbone Collection
+ */
+model.RoleCollection = model.AbstractCollection.extend({
+	url: 'api/roles',
+	model: model.RoleModel
+});
+
+
+/**
+ * User Backbone Model
+ */
+model.UserModel = Backbone.Model.extend({
+	urlRoot: 'api/user',
+	idAttribute: 'id',
+	id: '',
+	roleId: '',
+	username: '',
+	password: '',
+	firstName: '',
+	lastName: '',
+	defaults: {
+		'id': null,
+		'roleId': '',
+		'username': '',
+		'password': '',
+		'firstName': '',
+		'lastName': ''
+	}
+});
+
+/**
+ * User Backbone Collection
+ */
+model.UserCollection = model.AbstractCollection.extend({
+	url: 'api/users',
+	model: model.UserModel
 });
 
 {foreach from=$tables item=table}{if isset($tableInfos[$table->Name])}
